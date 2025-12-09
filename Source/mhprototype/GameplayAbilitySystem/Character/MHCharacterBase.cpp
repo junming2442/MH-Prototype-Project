@@ -4,8 +4,7 @@
 #include "MHCharacterBase.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
-
+#include "mhprototype/GameplayAbilitySystem/AttributeSets/BasicAttributeSet.h"
 
 // Sets default values
 AMHCharacterBase::AMHCharacterBase()
@@ -29,6 +28,9 @@ AMHCharacterBase::AMHCharacterBase()
 	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
+
+	// Add basic attribute set
+	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
 }
 
 // Called when the game starts or when spawned

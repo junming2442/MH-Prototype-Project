@@ -21,6 +21,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
 	class UAbilitySystemComponent* AbilitySystemComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
+	class UBasicAttributeSet* BasicAttributeSet;
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilitySystem")
 	EGameplayEffectReplicationMode AscReplicationMode = EGameplayEffectReplicationMode::Mixed;
