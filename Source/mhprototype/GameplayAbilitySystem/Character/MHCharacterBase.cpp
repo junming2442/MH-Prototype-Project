@@ -5,6 +5,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "mhprototype/GameplayAbilitySystem/AttributeSets/BasicAttributeSet.h"
+#include "mhprototype/GameplayAbilitySystem/AttributeSets/CombatAttributeSet.h"
 
 // Sets default values
 AMHCharacterBase::AMHCharacterBase()
@@ -31,6 +32,9 @@ AMHCharacterBase::AMHCharacterBase()
 
 	// Add basic attribute set
 	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
+
+	// Add damage attribute set
+	CombatAttributeSet = CreateDefaultSubobject<UCombatAttributeSet>(TEXT("CombatAttributeSet"));
 }
 
 // Called when the game starts or when spawned
