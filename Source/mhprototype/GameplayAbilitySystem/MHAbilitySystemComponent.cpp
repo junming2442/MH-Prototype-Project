@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "mhprototype/GameplayAbilitySystem/Character/MHCharacterBase.h"
 #include "mhprototype/GameplayAbilitySystem/MHAbilitySystemComponent.h"
+#include "mhprototype/GameplayAbilitySystem/Character/MHCharacterBase.h"
 
 UMHAbilitySystemComponent::UMHAbilitySystemComponent()
 {
