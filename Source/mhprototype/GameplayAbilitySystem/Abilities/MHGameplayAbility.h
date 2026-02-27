@@ -15,6 +15,9 @@ class MHPROTOTYPE_API UMHGameplayAbility : public UGameplayAbility
 	GENERATED_BODY()
 	
 public:
+
+	UMHGameplayAbility();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	bool ShouldShowInAbilitiesBar = false;
 };
