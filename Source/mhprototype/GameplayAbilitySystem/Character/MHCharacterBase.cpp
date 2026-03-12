@@ -37,13 +37,17 @@ AMHCharacterBase::AMHCharacterBase()
 
 	// Add damage attribute set
 	CombatAttributeSet = CreateDefaultSubobject<UCombatAttributeSet>(TEXT("CombatAttributeSet"));
+
 }
 
 // Called when the game starts or when spawned
 void AMHCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag("State.Dead"))
+		.AddUObject(this, &AMHCharacterBase::OnDeadTagChanged);
+
 }
 
 // Called every frame
@@ -133,6 +137,26 @@ void AMHCharacterBase::SendAbilitiesChangedEvent()
 void AMHCharacterBase::ServerSendGameplayEventToSelf_Implementation(FGameplayEventData EventData)
 {
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, EventData.EventTag, EventData);
+}
+
+void AMHCharacterBase::HandleDeath_Implementation()
+{
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetCharacterMovement()->DisableMovement();
+
+	FVector Impulse = GetActorForwardVector() * -20000;
+	Impulse.Z = 15000;
+	GetMesh()->AddImpulseAtLocation(Impulse, GetActorLocation());
+}
+
+void AMHCharacterBase::OnDeadTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	if (NewCount > 0)
+	{
+		HandleDeath();
+	}
 }
 
 
