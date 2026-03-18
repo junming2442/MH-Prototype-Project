@@ -4,6 +4,7 @@
 #include "BasicAttributeSet.h"
 #include "GameplayEffectExtension.h"
 #include "Net/UnrealNetwork.h"
+//#include <Kismet/KismetSystemLibrary.h>
 
 UBasicAttributeSet::UBasicAttributeSet()
 {
@@ -11,6 +12,9 @@ UBasicAttributeSet::UBasicAttributeSet()
 	MaxHealth = 100.f;
 	Stamina = 100.f;
 	MaxStamina = 100.f;
+	Damage = 0.f;
+	Shield = 0.f;
+	MaxShield = 100.f;
 }
 
 void UBasicAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -33,16 +37,37 @@ void UBasicAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute,
 	{
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxStamina());
 	}
+	else if (Attribute == GetShieldAttribute())
+	{
+		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxShield());
+	}
 }
 
 void UBasicAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
 
-	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	if (Data.EvaluatedData.Attribute == GetDamageAttribute())
 	{
-		// Clamp Health after modification
-		SetHealth(GetHealth());
+		float TotalDamage = GetDamage();
+		SetDamage(0.f);
+
+		float CurrentShield = GetShield();
+		if (CurrentShield > 0.f)
+		{
+			SetShield(CurrentShield - TotalDamage);
+			float RemainingDamage = TotalDamage - CurrentShield;
+
+			if (RemainingDamage > 0.f)
+			{
+				SetHealth(GetHealth() - RemainingDamage);
+			}
+		}
+		else
+		{
+			SetHealth(GetHealth() - TotalDamage);
+		}
+		//UE_LOG(LogTemp, Warning, TEXT("Damage: %f"), TotalDamage);
 
 		if (Data.EffectSpec.Def->GetAssetTags().HasTag(FGameplayTag::RequestGameplayTag("GameplayEffect.HitReaction")) && Data.EvaluatedData.Magnitude != 0.f)
 		{
@@ -51,10 +76,21 @@ void UBasicAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallb
 			GetOwningAbilitySystemComponent()->TryActivateAbilitiesByTag(HitReactionTagContainer);
 		}
 	}
+
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		// Clamp Health after modification
+		SetHealth(GetHealth());
+	}
 	else if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
 	{
 		// Clamp Stamina after modification
 		SetStamina(GetStamina());
+	}
+	else if (Data.EvaluatedData.Attribute == GetShieldAttribute())
+	{
+		// Clamp Stamina after modification
+		SetShield(GetShield());
 	}
 }
 
