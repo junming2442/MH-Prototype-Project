@@ -29,6 +29,7 @@ void UBasicAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 void UBasicAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
+
 	if (Attribute == GetHealthAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
@@ -51,8 +52,8 @@ void UBasicAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallb
 	{
 		float TotalDamage = GetDamage();
 		SetDamage(0.f);
-
 		float CurrentShield = GetShield();
+
 		if (CurrentShield > 0.f)
 		{
 			SetShield(CurrentShield - TotalDamage);
@@ -67,6 +68,7 @@ void UBasicAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallb
 		{
 			SetHealth(GetHealth() - TotalDamage);
 		}
+		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
 		//UE_LOG(LogTemp, Warning, TEXT("Damage: %f"), TotalDamage);
 
 		if (Data.EffectSpec.Def->GetAssetTags().HasTag(FGameplayTag::RequestGameplayTag("GameplayEffect.HitReaction")) && Data.EvaluatedData.Magnitude != 0.f)
@@ -81,6 +83,7 @@ void UBasicAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallb
 	{
 		// Clamp Health after modification
 		SetHealth(GetHealth());
+		//SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
 	}
 	else if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
 	{

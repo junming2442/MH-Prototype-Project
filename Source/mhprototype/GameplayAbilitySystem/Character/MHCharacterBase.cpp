@@ -35,7 +35,7 @@ AMHCharacterBase::AMHCharacterBase()
 	// Add basic attribute set
 	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
 
-	// Add damage attribute set
+	// Add combat attribute set
 	CombatAttributeSet = CreateDefaultSubobject<UCombatAttributeSet>(TEXT("CombatAttributeSet"));
 
 }
