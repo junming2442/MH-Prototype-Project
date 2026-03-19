@@ -8,6 +8,7 @@
 #include "mhprototype/GameplayAbilitySystem/MHAbilitySystemComponent.h"
 #include "mhprototype/GameplayAbilitySystem/AttributeSets/BasicAttributeSet.h"
 #include "mhprototype/GameplayAbilitySystem/AttributeSets/CombatAttributeSet.h"
+#include "mhprototype/GameplayAbilitySystem/Abilities/MHGameplayAbility.h"
 
 // Sets default values
 AMHCharacterBase::AMHCharacterBase()
@@ -100,6 +101,13 @@ TArray<FGameplayAbilitySpecHandle> AMHCharacterBase::GrantAbilities(TArray<TSubc
 	TArray <FGameplayAbilitySpecHandle> AbilityHandles;
 	for (TSubclassOf<UGameplayAbility> Ability : AbilitiesToGrant)
 	{
+		int32 InputID = -1;
+
+		if (const UMHGameplayAbility* NexusAbilityCDO = GetDefault<UMHGameplayAbility>(Ability))
+		{
+			InputID = static_cast<int32>(NexusAbilityCDO->AbilityInputID);
+		}
+
 		FGameplayAbilitySpecHandle SpecHandle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Ability, 1, -1, this));
 
 		AbilityHandles.Add(SpecHandle);

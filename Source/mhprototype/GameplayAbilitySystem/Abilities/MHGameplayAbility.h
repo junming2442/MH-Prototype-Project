@@ -9,6 +9,18 @@
 /**
  * 
  */
+
+UENUM(BlueprintType)
+enum class EAbilityInputID : uint8
+{
+	None UMETA(DisplayName = "None"), // 0
+	PrimaryAbility UMETA(DisplayName = "PrimaryAbility"), // 1
+	SecondaryAbility UMETA(DisplayName = "SecondaryAbility"), // 2
+	DefensiveAbility UMETA(DisplayName = "DefensiveAbility"), // 3
+	MovementAbility UMETA(DisplayName = "MovementAbility") // 4
+
+};
+
 UCLASS(Blueprintable)
 class MHPROTOTYPE_API UMHGameplayAbility : public UGameplayAbility
 {
@@ -20,6 +32,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	bool ShouldShowInAbilitiesBar = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	EAbilityInputID AbilityInputID = EAbilityInputID::None;
 
 private:
 	UFUNCTION(BlueprintCallable, Category = "Helpers")
