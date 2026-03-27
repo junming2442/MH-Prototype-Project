@@ -91,7 +91,7 @@ UAbilitySystemComponent* AMHCharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
-TArray<FGameplayAbilitySpecHandle> AMHCharacterBase::GrantAbilities(TArray<TSubclassOf<UGameplayAbility>> AbilitiesToGrant)
+TArray<FGameplayAbilitySpecHandle> AMHCharacterBase::GrantAbilities(TArray<TSubclassOf<UGameplayAbility>> AbilitiesToGrant, const int32 Level)
 {
 	if (!AbilitySystemComponent || !HasAuthority())
 	{
@@ -110,7 +110,7 @@ TArray<FGameplayAbilitySpecHandle> AMHCharacterBase::GrantAbilities(TArray<TSubc
 			ShouldActivate = NexusAbilityCDO->AutoActivateWhenGranted;
 		}
 
-		FGameplayAbilitySpecHandle SpecHandle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Ability, 1, InputID, this));
+		FGameplayAbilitySpecHandle SpecHandle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Ability, Level, InputID, this));
 
 		AbilityHandles.Add(SpecHandle);
 
