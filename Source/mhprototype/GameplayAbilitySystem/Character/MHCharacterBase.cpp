@@ -108,7 +108,7 @@ TArray<FGameplayAbilitySpecHandle> AMHCharacterBase::GrantAbilities(TArray<TSubc
 			InputID = static_cast<int32>(NexusAbilityCDO->AbilityInputID);
 		}
 
-		FGameplayAbilitySpecHandle SpecHandle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Ability, 1, -1, this));
+		FGameplayAbilitySpecHandle SpecHandle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Ability, 1, InputID, this));
 
 		AbilityHandles.Add(SpecHandle);
 	}
