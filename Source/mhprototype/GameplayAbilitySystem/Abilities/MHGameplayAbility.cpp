@@ -9,6 +9,14 @@ UMHGameplayAbility::UMHGameplayAbility()
 	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("State.Dead")));
 }
 
+void UMHGameplayAbility::SetAbilityLevel(int32 NewLevel)
+{
+	if (FGameplayAbilitySpec* AbilitySpec = GetCurrentAbilitySpec())
+	{
+		AbilitySpec->Level = NewLevel;
+	}
+}
+
 bool UMHGameplayAbility::HasPlayerController() const
 {
 	const APawn* PawnObject = Cast<APawn>(GetAvatarActorFromActorInfo());

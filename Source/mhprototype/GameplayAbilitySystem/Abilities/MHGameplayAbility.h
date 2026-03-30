@@ -39,6 +39,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	EAbilityInputID AbilityInputID = EAbilityInputID::None;
 
+	UFUNCTION(BlueprintCallable, Category = "Ability")
+	void SetAbilityLevel(int32 NewLevel);
+
 private:
 	UFUNCTION(BlueprintCallable, Category = "Helpers")
 	bool HasPlayerController() const;
