@@ -67,4 +67,7 @@ public:
 
 	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "AbilitySystem")
 	void ServerSendGameplayEventToSelf(FGameplayEventData EventData);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AbilitySystem")
+	void HandleAbilityEnded(const FAbilityEndedData& AbilityEndedData);
 };

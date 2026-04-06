@@ -74,6 +74,12 @@ void AMHCharacterBase::PossessedBy(AController* NewController)
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 		GrantAbilities(StartingAbilities);
 	}
+
+	if (AbilitySystemComponent)
+	{
+		// Bind the Character's function to the Component's delegate
+		AbilitySystemComponent->OnAbilityEnded.AddUObject(this, &AMHCharacterBase::HandleAbilityEnded);
+	}
 }
 
 void AMHCharacterBase::OnRep_PlayerState()
@@ -171,6 +177,32 @@ void AMHCharacterBase::OnDeadTagChanged(const FGameplayTag CallbackTag, int32 Ne
 	if (NewCount > 0)
 	{
 		HandleDeath();
+	}
+}
+
+void AMHCharacterBase::HandleAbilityEnded_Implementation(const FAbilityEndedData& AbilityEndedData)
+{
+	// 1. We need the Ability System Component to look up the handle
+	if (!AbilitySystemComponent) return;
+
+	// 2. Find the "Spec" (the data) using the Handle from the event
+	FGameplayAbilitySpec* AbilitySpec = AbilitySystemComponent->FindAbilitySpecFromHandle(AbilityEndedData.AbilitySpecHandle);
+
+	if (AbilitySpec && AbilitySpec->Ability)
+	{
+		// 3. Get the actual Ability object
+		UGameplayAbility* EndedAbility = AbilitySpec->Ability;
+
+		// 4. Check for your Monster Hunter attack tag
+		FGameplayTag AttackTag = FGameplayTag::RequestGameplayTag(FName("GameplayAbility.MeleeAttack"));
+
+		// Use HasTag to check if it's an attack or a sub-tag (like Ability.Attack.Heavy)
+		if (EndedAbility->AbilityTags.HasTag(AttackTag))
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Monster Hunter Attack Ended!"));
+
+			// Your logic: reset rotation lock, enable next combo window, etc.
+		}
 	}
 }
 
