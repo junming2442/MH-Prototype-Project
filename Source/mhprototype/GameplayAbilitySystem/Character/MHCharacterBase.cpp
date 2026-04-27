@@ -197,9 +197,10 @@ void AMHCharacterBase::HandleAbilityEnded_Implementation(const FAbilityEndedData
 		FGameplayTag AttackTag = FGameplayTag::RequestGameplayTag(FName("GameplayAbility.MeleeAttack"));
 
 		// Use HasTag to check if it's an attack or a sub-tag (like Ability.Attack.Heavy)
-		if (EndedAbility->AbilityTags.HasTag(AttackTag))
+		//if (EndedAbility->AbilityTags.HasTag(AttackTag))
+		if (EndedAbility->GetAssetTags().HasTag(AttackTag))
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Monster Hunter Attack Ended!"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Attack Ended!"));
 
 			// Your logic: reset rotation lock, enable next combo window, etc.
 		}
