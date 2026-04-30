@@ -1,9 +1,11 @@
 To-do:
-1. Replace weapon swapping animation
-2. Polish Talent Tree UI
+- Replace weapon swapping animation
+- Polish Talent Tree UI
 
 Pending bug fix:
-1. Changing anim instance after playing montage will have race condition, temporary solved by using delay
-2. Weapon swapping does not work in multiplayer if added montage
-3. AIPerception not working for clients
-4. Client UI not updating when swapping weapons
+- Weapon swapping does not work in multiplayer if added montage
+- AIPerception not working for clients
+
+Temporary:
+- Changing anim instance after playing montage will have race condition, temporary solved by using delay
+- Temporary solve ability granted from talent replication with a custom struct to update client UI
