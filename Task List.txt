@@ -4,7 +4,6 @@ To-do:
 
 Pending bug fix:
 - Weapon swapping does not work in multiplayer if added montage
-- AIPerception not working for clients
 
 Temporary:
 - Changing anim instance after playing montage will have race condition, temporary solved by using delay
