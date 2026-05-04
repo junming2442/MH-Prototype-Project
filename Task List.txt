@@ -1,5 +1,6 @@
 To-do:
 - Replace weapon swapping animation
+- Replace staff decal and vfx
 - Polish Talent Tree UI
 
 Pending bug fix:
