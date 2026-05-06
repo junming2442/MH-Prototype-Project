@@ -2,6 +2,7 @@ To-do:
 - Replace weapon swapping animation
 - Replace staff decal and vfx
 - Polish Talent Tree UI
+- AI behaviour tree weapon swapping at neutral state
 
 Pending bug fix:
 - Weapon swapping does not work in multiplayer if added montage
