@@ -1,6 +1,6 @@
 To-do:
 - Replace weapon swapping animation
-- Replace staff decal and vfx
+- Replace staff vfx
 - Polish Talent Tree UI
 - AI behaviour tree weapon swapping at neutral state
 
